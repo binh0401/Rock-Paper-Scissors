@@ -1,0 +1,49 @@
+body{
+  font-family: Arial;
+  background-color: black;
+  color: white;
+}
+
+.title{
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.resetbutton{
+  padding: 8px 15px;
+  font-size: 15px;
+}
+
+img{
+  width: 70px;
+  padding: 30px;
+  background-color: transparent;
+  border-radius: 80px;
+}
+.playbutton{
+  border-width: 1px;
+  border: solid;
+  border-color: white;
+  border-radius: 80px;
+  background-color: black;
+  margin-right: 10px;
+  border-width: 2px;
+  margin-bottom: 30px;
+
+}
+button{
+  cursor: pointer;
+}
+
+.paperbutton{
+  height: 70px;
+}
+
+.result{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.detail{
+  margin-bottom: 40px;
+}

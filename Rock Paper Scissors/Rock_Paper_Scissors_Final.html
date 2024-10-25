@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="rockpaperscissors.css">
+  </head>
+  <body>
+      <p class="title">Rock Paper Scissors</p>
+
+
+      <button onclick="play('Rock')" class="playbutton"><img src="Rock.png" class="rockbutton"></button>
+      <button onclick="play('Paper')" class="playbutton"><img src="Paper.png" alt="" class="paperbutton"></button>
+      <button onclick="play('Scissors')" class="playbutton"><img src="Scissors.png" alt="" class="scissorsbutton"></button>
+
+
+      <p class="result"></p>
+      <p class="detail"></p>
+      <p class="scoreboard">
+        <span>Wins: <span class="wins">0</span>,</span> <span>Losses: <span class="losses">0</span>,</span> <span>Ties: <span class="ties">0</span></span>
+      </p>
+
+
+      <button onclick="resetScore()" class="resetbutton">Reset Score</button>
+
+
+      <script>
+        let score = JSON.parse(localStorage.getItem('score'));
+        if(score === null)
+      {
+        score = {
+          wins: 0,
+          loses: 0,
+          ties:0
+        };
+      }
+
+        let computerMove = '';
+        let result ='';
+        let winsElement = document.querySelector('.wins');
+        let losesElement = document.querySelector('.losses');
+        let tiesElement = document.querySelector('.ties');
+        let resultElement = document.querySelector('.result');
+        let detailElement = document.querySelector('.detail');
+        
+
+        winsElement.innerHTML = `${score.wins}`;
+        losesElement.innerHTML = `${score.loses}`;
+        tiesElement.innerHTML = `${score.ties}`;
+
+
+        function getComputerMove()
+        {
+          let x = Math.random();
+          if(0<=x && x<1/3) computerMove='Rock';
+          else if(1/3<=x && x<2/3) computerMove='Paper';
+          else computerMove = 'Scissors';
+        }
+
+        function updateScore()
+        {
+          if(result === 'Tie') score.ties++;
+          else if(result === 'Win') score.wins++;
+          else score.loses++;
+          localStorage.setItem('score',JSON.stringify(score));
+          winsElement.innerHTML = `${score.wins}`;
+          losesElement.innerHTML = `${score.loses}`;
+          tiesElement.innerHTML = `${score.ties}`;
+        }
+
+        function play(playerMove)
+        {
+            getComputerMove();
+
+            if(playerMove === computerMove) result = 'Tie';
+            else{
+              if(playerMove === 'Rock')
+            {
+              if(computerMove === 'Paper') result = 'Lose';
+              else result = 'Win';
+            }
+
+              else if(playerMove === 'Paper')
+            {
+              if(computerMove === 'Rock') result = 'Win';
+              else result = 'Lose';
+            }
+              else 
+            {
+              if(computerMove === 'Rock') result='Lose';
+              else result='Win';
+            }
+            }
+
+            updateScore();
+            notification(playerMove);
+        }
+
+        function resetScore()
+        {
+          score.wins=0;
+          score.loses=0;
+          score.ties=0;
+          localStorage.removeItem('score');
+          winsElement.innerHTML = `${score.wins}`;
+          losesElement.innerHTML = `${score.loses}`;
+          tiesElement.innerHTML = `${score.ties}`;
+          resultElement.innerHTML = '';
+          detailElement.innerHTML = '';
+        }
+        
+        function notification(playerMove)
+        {
+            
+            if(result === 'Tie')
+            {
+              resultElement.innerHTML = 'Tie.';
+            }
+            else{
+              resultElement.innerHTML = `You ${result}.`;
+            }
+
+            detailElement.innerHTML = `You <img src="${playerMove}.png"> <img src="${computerMove}.png"> Computer`;
+
+        }
+
+      </script>
+  </body>
+</html>
