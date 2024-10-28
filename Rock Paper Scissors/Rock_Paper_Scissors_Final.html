@@ -20,7 +20,7 @@
 
 
       <button onclick="resetScore()" class="resetbutton">Reset Score</button>
-
+      <button class="autoplaybutton" onclick="autoplay()">Auto play</button>
 
       <script>
         let score = JSON.parse(localStorage.getItem('score'));
@@ -121,7 +121,28 @@
             detailElement.innerHTML = `You <img src="${playerMove}.png"> <img src="${computerMove}.png"> Computer`;
 
         }
-
+        
+        let isPlaying = false;
+        let intervalId;
+        function autoplay()
+        {
+          if(isPlaying === false)
+        {
+          intervalId = setInterval(function()
+        {
+          let playermove = Math.random()
+          if(playermove>=0 && playermove <=1/3) playermove = 'Rock';
+          else if(playermove >1/3 && playermove <=2/3) playermove = 'Paper';
+          else playermove = 'Scissors';
+          play(playermove);
+        },1000);
+          isPlaying = true;
+        }
+          else{
+            clearInterval(intervalId);
+            isPlaying = false;
+          }        
+        }
       </script>
   </body>
 </html>
